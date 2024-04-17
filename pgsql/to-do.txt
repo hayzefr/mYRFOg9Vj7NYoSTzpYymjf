@@ -1,0 +1,6 @@
+admin.php
+- Vérifier si un tournoi existe déjà à la date séléctionné. Si c'est le cas, impossible d'ajouter un novueau tournoir sur cette même date.
+- Si un joueur est séléctionné dans Premier, il ne peut pas être séléctionné dans Deuxième et pareil pour Troisième.
+
+index.php
+- auto refresh toutes les minutes.
