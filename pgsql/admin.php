@@ -3,9 +3,9 @@ require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date = $_POST['date'];
-    $premier = $_POST['premier'];
-    $deuxieme = $_POST['deuxieme'];
-    $troisieme = $_POST['troisieme'];
+    $premier = !empty($_POST['premier']) ? $_POST['premier'] : null;
+    $deuxieme = !empty($_POST['deuxieme']) ? $_POST['deuxieme'] : null;
+    $troisieme = !empty($_POST['troisieme']) ? $_POST['troisieme'] : null;
     $joueurs_sur_table = isset($_POST['joueurs_sur_table']) ? $_POST['joueurs_sur_table'] : [];
 
     $stmt = $pdo->prepare("INSERT INTO jours (date, premier_id, deuxieme_id, troisieme_id, joueurs_sur_table) VALUES (?, ?, ?, ?, ?::text[])");
@@ -15,15 +15,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $jour_id = $pdo->lastInsertId();
 
-    $points_joueurs = [
-        $premier => 10,
-        $deuxieme => 5,
-        $troisieme => 3
-    ];
+    $points_joueurs = [];
+
+    if (!is_null($premier)) {
+        $points_joueurs[$premier] = 10;
+    }
+    if (!is_null($deuxieme)) {
+        $points_joueurs[$deuxieme] = 5;
+    }
+    if (!is_null($troisieme)) {
+        $points_joueurs[$troisieme] = 3;
+    }
 
     foreach ($joueurs_sur_table as $joueur_id) {
-        if (!in_array($joueur_id, [$premier, $deuxieme, $troisieme])) {
-            $points_joueurs[$joueur_id] = 1;
+        if (!in_array($joueur_id, [$premier, $deuxieme, $troisieme]) && $joueur_id !== '') {
+            if (isset($points_joueurs[$joueur_id])) {
+                $points_joueurs[$joueur_id] += 1;
+            } else {
+                $points_joueurs[$joueur_id] = 1;
+            }
         }
     }
 
@@ -36,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-$joueurs = $pdo->query("SELECT * FROM joueurs")->fetchAll();
-
+$joueurs = $pdo->query("SELECT * FROM joueurs")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
