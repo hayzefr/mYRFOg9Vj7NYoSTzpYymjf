@@ -130,7 +130,7 @@ $joueurs = $pdo->query("SELECT * FROM joueurs")->fetchAll(PDO::FETCH_ASSOC);
 
     <footer class="py-3 mt-4 bg-light text-center">
         <div class="container">
-            <span>Developped by APS</span>
+            <span>v1.0 - Developped by APS</span>
         </div>
     </footer>
 
