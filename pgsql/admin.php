@@ -87,7 +87,7 @@ $joueurs = $pdo->query("SELECT * FROM joueurs")->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-group row">
                 <label for="deuxieme" class="col-sm-2 col-form-label">Deuxième : </label>
                 <div class="col-sm-10">
-                    <select name="deuxieme" id="deuxieme" class="form-control" required>
+                    <select name="deuxieme" id="deuxieme" class="form-control">
                         <option value="">-- Choisir --</option>
                         <?php foreach ($joueurs as $joueur): ?>
                             <option value="<?= $joueur['id'] ?>"><?= htmlspecialchars($joueur['nom']) ?></option>
@@ -98,7 +98,7 @@ $joueurs = $pdo->query("SELECT * FROM joueurs")->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-group row">
                 <label for="troisieme" class="col-sm-2 col-form-label">Troisième : </label>
                 <div class="col-sm-10">
-                    <select name="troisieme" id="troisieme" class="form-control" required>
+                    <select name="troisieme" id="troisieme" class="form-control">
                         <option value="">-- Choisir --</option>
                         <?php foreach ($joueurs as $joueur): ?>
                             <option value="<?= $joueur['id'] ?>"><?= htmlspecialchars($joueur['nom']) ?></option>
